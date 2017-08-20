@@ -18,6 +18,7 @@ class TestDevelopmentConfig(TestCase):
         self.assertTrue(app.config['SECRET_KEY'] == 'my_precious')
         self.assertTrue(app.config['DEBUG'] is True)
         self.assertFalse(current_app is None)
+        print(app.config['SQLALCHEMY_DATABASE_URI'])
         self.assertTrue(
             app.config['SQLALCHEMY_DATABASE_URI'] ==
             'postgres://postgres:postgres@users-db:5432/users_dev'
