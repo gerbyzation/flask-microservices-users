@@ -11,7 +11,7 @@ manager = Manager(app)
 
 @manager.command
 def recreate_db():
-    """REcreates a database."""
+    """Rereates a database."""
     db.drop_all()
     db.create_all()
     db.session.commit()

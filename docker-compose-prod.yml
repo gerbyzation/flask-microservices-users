@@ -6,7 +6,7 @@ services:
     container_name: users-db
     build: ./project/db
     ports:
-        - 5435:5432  # expose ports - HOST:CONTAINER
+      - 5435:5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -15,20 +15,19 @@ services:
 
   users-service:
     container_name: users-service
-    build: ./
-    volumes:
-      - '.:/usr/src/app'
+    build: .
     ports:
-      - 5001:5000 # expose ports - HOST:CONTAINER
+      - 5001:5000
     environment:
-      - APP_SETTINGS=project.config.DevelopmentConfig
-      - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
+      - APP_SETTINGS=project.config.ProductionConfig
+      - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_prod
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
     depends_on:
       users-db:
         condition: service_healthy
     links:
       - users-db
+    command: gunicorn -b 0.0.0.0:5000 manage:app
 
   nginx:
     container_name: nginx
