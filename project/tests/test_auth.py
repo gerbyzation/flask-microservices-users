@@ -148,7 +148,6 @@ class TestAuthBlueprint(BaseTestCase):
             data = json.loads(response.data.decode())
             self.assertEqual(data['status'], 'error')
             self.assertEqual(data['message'], 'User does not exist.')
-            self.assertTrue(data['auth_token'])
             self.assertEqual(response.content_type, 'application/json')
             self.assertEqual(response.status_code, 404)
 
